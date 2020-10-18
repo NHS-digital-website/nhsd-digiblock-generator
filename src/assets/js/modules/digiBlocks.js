@@ -13,6 +13,7 @@ export default function DigiBlocks() {
   let heightUnits = 12;
   let fineness = 0; // 0-1 where 0 = every block is rendered, 1 = no blocks are rendered
   let zoomLevel = 600;
+  let colourTheme = 'yellow';
 
   //
   const widthUnitsControl = document.querySelector('#widthUnits');
@@ -20,6 +21,7 @@ export default function DigiBlocks() {
   const depthUnitsControl = document.querySelector('#depthUnits');
   const finenessControl = document.querySelector('#fineness');
   const zoomControl = document.querySelector('#zoom');
+  const colourThemeControl = document.querySelector('#colourTheme');
   const exportButton = document.querySelector('#exportButton');
 
   const xmlns = 'http://www.w3.org/2000/svg';
@@ -67,7 +69,7 @@ export default function DigiBlocks() {
           y: i,
           z: Math.floor(j / widthUnits),
           blank: Math.random() > 1 - fineness,
-          colourVariantId: Math.round(Math.random() * (colourVariants.length - 1)),
+          colourVariantId: colourTheme === 'random' ? Math.round(Math.random() * (colourVariants.length - 1)) : colourVariants.indexOf(colourTheme),
         };
 
         blocks[i].push(block);
@@ -129,7 +131,22 @@ export default function DigiBlocks() {
     drawBlocks();
   };
 
+  const initColourControl = () => {
+    const allColourVariants = ['random', ...colourVariants];
+    allColourVariants.forEach((colour) => {
+      const optionEl = document.createElement('option');
+      optionEl.value = colour;
+      optionEl.text = colour;
+      if (colour === colourTheme) {
+        optionEl.setAttribute('selected', true);
+      }
+      colourThemeControl.appendChild(optionEl);
+    });
+  };
+
   const init = () => {
+    initColourControl();
+
     finenessControl.value = fineness;
     widthUnitsControl.value = widthUnits;
     depthUnitsControl.value = depthUnits;
@@ -160,6 +177,11 @@ export default function DigiBlocks() {
 
     zoomControl.addEventListener('change', () => {
       zoomLevel = +zoomControl.value;
+      render();
+    });
+
+    colourThemeControl.addEventListener('change', () => {
+      colourTheme = colourThemeControl.value;
       render();
     });
 

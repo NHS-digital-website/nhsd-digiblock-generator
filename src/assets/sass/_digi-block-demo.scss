@@ -51,7 +51,9 @@
     float: left;
   }
 
-  input {
+  input,
+  select {
     float: right;
+    min-width: 130px;
   }
 }
