@@ -21,7 +21,7 @@
   const imagemin = require('gulp-imagemin');
   const pngquant = require('imagemin-pngquant');
   const webpackStream = require('webpack-stream');
-  
+
   const browserSync = require('browser-sync').create();
   const reload = browserSync.reload;
 
@@ -138,7 +138,7 @@
       }));
   }
 
-  
+
   /**************** JavaScript processing ****************/
   // Clean JS directory
   function cleanJS(done) {
@@ -176,7 +176,7 @@
               exclude: /(node_modules)/,
               loader: 'babel-loader',
               query: {
-                presets: ['babel-preset-env']
+                presets: ['babel-preset-stage-3'],
               }
             }
           ]
@@ -214,7 +214,7 @@
 
   function runWebServer (done) {
     // Server config is based on the environment
-    browserSync.init(serverConfig, 
+    browserSync.init(serverConfig,
       // Middleware to handle errors
       (err, bs) => {
         bs.addMiddleware("*", (req, res) => {
@@ -240,6 +240,6 @@
     processHTML
   );
   exports.serve = gulp.parallel(runWebServer, watchFiles);
-  
+
   exports.default = gulp.series(exports.build, exports.serve);
 })();

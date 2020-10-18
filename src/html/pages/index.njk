@@ -14,27 +14,32 @@
       </div>
       <div class="form-control">
         <label for="widthUnits">Width units</label>
-        <input type="range" min="1" max="12" id="widthUnits" step="1">
+        <input type="range" min="1" max="20" id="widthUnits" step="1">
       </div>
       <div class="form-control">
         <label for="heightUnits">Height units</label>
-        <input type="range" min="1" max="12" id="heightUnits" step="1">
+        <input type="range" min="1" max="20" id="heightUnits" step="1">
       </div>
       <div class="form-control">
         <label for="depthUnits">Depth units</label>
-        <input type="range" min="1" max="12" id="depthUnits" step="1">
+        <input type="range" min="1" max="20" id="depthUnits" step="1">
       </div>
+      <hr>
       <div class="form-control">
         <label for="zoom">Zoom</label>
         <input type="range" min="200" max="4000" id="zoom" step="50">
       </div>
       <div class="form-control">
-        <label for="colourTheme">Colour Theme</label>
-        <select id="colourTheme"></select>
+        <label for="colour">Colour</label>
+        <select id="colour"></select>
       </div>
       <hr>
       <button class="nhsuk-button" id="exportButton">Export digiblock data</button>
-      <a href="#" id="fileDownloadTrigger" style="display: none; width: 0; height: 0;">Trigger data file download</a>
+      <br>
+      <button class="nhsuk-button nhsuk-button--secondary" id="importButton">Import digiblock data</button>
+
+      <a href="#" id="fileDownloadTrigger" class="visually-hidden">Trigger data file download</a>
+      <input type="file" id="fileUploadTrigger" accept=".json" class="visually-hidden">
     </div>
   </div>
   <div class="demo-container demo-container--viewbox">
