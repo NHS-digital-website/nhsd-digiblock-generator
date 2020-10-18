@@ -19,5 +19,4 @@ todaysDateEls.forEach((el) => {
   el.innerText = todaysDate();
 });
 
-const digiBlocks = new DigiBlocks();
-digiBlocks.init();
+DigiBlocks();

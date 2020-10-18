@@ -1,36 +1,45 @@
 {% set pageName = 'Digi blocks' %}
-{% extends "layouts/blank-layout.njk" %}
+{% extends "layouts/demo-layout.njk" %}
 
 {% block heading %}
   <h1 class="nhsuk-heading-xl">{{ pageName }}</h1>
 {% endblock %}
 
 {% block content %}
-  <div class="float-container">
-    <div class="float-container__left">
-      <div class="form-controls">
-        <div class="form-control">
-          <label for="fineness">Fineness</label>
-          <input type="range" min="0" max="1" id="fineness" step="0.01">
-        </div>
-        <div class="form-control">
-          <label for="widthUnits">Width units</label>
-          <input type="range" min="1" max="12" id="widthUnits" step="1">
-        </div>
-        <div class="form-control">
-          <label for="heightUnits">Height units</label>
-          <input type="range" min="1" max="12" id="heightUnits" step="1">
-        </div>
-        <div class="form-control">
-          <label for="depthUnits">Depth units</label>
-          <input type="range" min="1" max="12" id="depthUnits" step="1">
-        </div>
-        <button class="nhsuk-button nhsuk-button--secondary" id="exportButton">Export digiblock data</button>
-        <a href="#" id="fileDownloadTrigger" style="display: none; width: 0; height: 0;">Trigger data file download</a>
+  <div class="demo-container demo-container--controls">
+    <div class="form-controls">
+      <div class="form-control">
+        <label for="fineness">Fineness</label>
+        <input type="range" min="0" max="1" id="fineness" step="0.01">
       </div>
+      <div class="form-control">
+        <label for="widthUnits">Width units</label>
+        <input type="range" min="1" max="12" id="widthUnits" step="1">
+      </div>
+      <div class="form-control">
+        <label for="heightUnits">Height units</label>
+        <input type="range" min="1" max="12" id="heightUnits" step="1">
+      </div>
+      <div class="form-control">
+        <label for="depthUnits">Depth units</label>
+        <input type="range" min="1" max="12" id="depthUnits" step="1">
+      </div>
+      <div class="form-control">
+        <label for="zoom">Zoom</label>
+        <input type="range" min="200" max="4000" id="zoom" step="50">
+      </div>
+      <hr>
+      <button class="nhsuk-button" id="exportButton">Export digiblock data</button>
+      <a href="#" id="fileDownloadTrigger" style="display: none; width: 0; height: 0;">Trigger data file download</a>
     </div>
-    <div class="float-container__left">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2000 2000" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false" id="db-stage"></svg>
-    </div>
+  </div>
+  <div class="demo-container demo-container--viewbox">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 200 200"
+      preserveAspectRatio="xMidYMid meet"
+      aria-hidden="true"
+      focusable="false"
+      id="db-stage"></svg>
   </div>
 {% endblock %}

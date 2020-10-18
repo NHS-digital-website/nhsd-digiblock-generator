@@ -1,5 +1,10 @@
 /* global document */
 export default function DigiBlocks() {
+  const stageEl = document.querySelector('#db-stage');
+  if (!stageEl) {
+    return;
+  }
+
   //
   // Change these to set the amount of blocks
   const version = '0.1';
@@ -7,12 +12,14 @@ export default function DigiBlocks() {
   let depthUnits = 1;
   let heightUnits = 12;
   let fineness = 0; // 0-1 where 0 = every block is rendered, 1 = no blocks are rendered
+  let zoomLevel = 600;
 
   //
   const widthUnitsControl = document.querySelector('#widthUnits');
   const heightUnitsControl = document.querySelector('#heightUnits');
   const depthUnitsControl = document.querySelector('#depthUnits');
   const finenessControl = document.querySelector('#fineness');
+  const zoomControl = document.querySelector('#zoom');
   const exportButton = document.querySelector('#exportButton');
 
   const xmlns = 'http://www.w3.org/2000/svg';
@@ -21,9 +28,6 @@ export default function DigiBlocks() {
   const xShift = blockWidth / 2;
   const yShift = blockHeight / 4;
   const colourVariants = ['white', 'yellow', 'black', 'grey', 'light-grey', 'dark-grey', 'blue', 'light-blue', 'dark-blue'];
-  const stageEl = document.querySelector('#db-stage');
-  const stageWidth = +stageEl.viewBox.baseVal.width;
-  const stageHeight = +stageEl.viewBox.baseVal.height;
   let blocks = [];
 
   const exportRenderData = () => {
@@ -74,10 +78,10 @@ export default function DigiBlocks() {
   const drawBlocks = () => {
     stageEl.innerHTML = '';
 
-    let xAnchor = Math.round(stageWidth * 0.5 - (widthUnits + 1) * blockWidth * 0.25);
+    let xAnchor = Math.round(zoomLevel * 0.5 - (widthUnits + 1) * blockWidth * 0.25);
     // Shift by number of depthUnits
     xAnchor += Math.round((depthUnits - 1) * 0.5 * xShift);
-    let yAnchor = Math.round(stageHeight * 0.5 - blockHeight * 0.5
+    let yAnchor = Math.round(zoomLevel * 0.5 - blockHeight * 0.5
       + (heightUnits - 1) * blockHeight * 0.25);
     // Shift by number of widthUnits
     yAnchor -= Math.round((widthUnits - 1) * 0.125 * blockHeight);
@@ -115,7 +119,12 @@ export default function DigiBlocks() {
     });
   };
 
+  const resizeStage = () => {
+    stageEl.setAttribute('viewBox', `0 0 ${zoomLevel} ${zoomLevel}`);
+  };
+
   const render = () => {
+    resizeStage();
     generateBlocks();
     drawBlocks();
   };
@@ -125,6 +134,7 @@ export default function DigiBlocks() {
     widthUnitsControl.value = widthUnits;
     depthUnitsControl.value = depthUnits;
     heightUnitsControl.value = heightUnits;
+    zoomControl.value = zoomLevel;
 
     render();
 
@@ -148,10 +158,13 @@ export default function DigiBlocks() {
       render();
     });
 
+    zoomControl.addEventListener('change', () => {
+      zoomLevel = +zoomControl.value;
+      render();
+    });
+
     exportButton.addEventListener('click', exportRenderData);
   };
 
-  return {
-    init,
-  };
+  init();
 }

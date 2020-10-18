@@ -1,0 +1,15 @@
+.float-container {
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  &__left {
+    float: left;
+  }
+
+  &__right {
+    float: right;
+  }
+}
