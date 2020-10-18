@@ -8,12 +8,12 @@ export default function DigiBlocks() {
   //
   // Change these to set the amount of blocks
   const version = '0.1';
-  let widthUnits = 1;
-  let depthUnits = 1;
-  let heightUnits = 12;
+  let widthUnits = 3;
+  let depthUnits = 3;
+  let heightUnits = 3;
+  let viewBoxSize = 600;
+  let colourTheme = 'blue';
   let fineness = 0; // 0-1 where 0 = every block is rendered, 1 = no blocks are rendered
-  let zoomLevel = 600;
-  let colourTheme = 'yellow';
 
   //
   const widthUnitsControl = document.querySelector('#widthUnits');
@@ -27,8 +27,8 @@ export default function DigiBlocks() {
   const xmlns = 'http://www.w3.org/2000/svg';
   const blockWidth = 71;
   const blockHeight = 82;
-  const xShift = blockWidth / 2;
-  const yShift = blockHeight / 4;
+  const xShift = blockWidth * 0.5;
+  const yShift = blockHeight * 0.25;
   const colourVariants = ['white', 'yellow', 'black', 'grey', 'light-grey', 'dark-grey', 'blue', 'light-blue', 'dark-blue'];
   let blocks = [];
 
@@ -69,7 +69,9 @@ export default function DigiBlocks() {
           y: i,
           z: Math.floor(j / widthUnits),
           blank: Math.random() > 1 - fineness,
-          colourVariantId: colourTheme === 'random' ? Math.round(Math.random() * (colourVariants.length - 1)) : colourVariants.indexOf(colourTheme),
+          colourVariantId: colourVariants.indexOf(colourTheme) >= 0
+            ? colourVariants.indexOf(colourTheme)
+            : Math.round(Math.random() * (colourVariants.length - 1)),
         };
 
         blocks[i].push(block);
@@ -80,14 +82,14 @@ export default function DigiBlocks() {
   const drawBlocks = () => {
     stageEl.innerHTML = '';
 
-    let xAnchor = Math.round(zoomLevel * 0.5 - (widthUnits + 1) * blockWidth * 0.25);
-    // Shift by number of depthUnits
-    xAnchor += Math.round((depthUnits - 1) * 0.5 * xShift);
-    let yAnchor = Math.round(zoomLevel * 0.5 - blockHeight * 0.5
-      + (heightUnits - 1) * blockHeight * 0.25);
-    // Shift by number of widthUnits
-    yAnchor -= Math.round((widthUnits - 1) * 0.125 * blockHeight);
-    yAnchor -= Math.round((depthUnits - 1) * 0.5 * yShift);
+    // Calculate center coordinates maths
+    const xAnchor = Math.round(viewBoxSize * 0.5
+      - (widthUnits + 1) * 0.5 * xShift
+      + (depthUnits - 1) * 0.5 * xShift);
+    const yAnchor = Math.round(viewBoxSize * 0.5
+      + (heightUnits - 3) * yShift
+      - (widthUnits - 1) * 0.5 * yShift
+      - (depthUnits - 1) * 0.5 * yShift);
 
     blocks.forEach((layer, index) => {
       const layerEl = document.createElementNS(xmlns, 'g');
@@ -122,7 +124,7 @@ export default function DigiBlocks() {
   };
 
   const resizeStage = () => {
-    stageEl.setAttribute('viewBox', `0 0 ${zoomLevel} ${zoomLevel}`);
+    stageEl.setAttribute('viewBox', `0 0 ${viewBoxSize} ${viewBoxSize}`);
   };
 
   const render = () => {
@@ -151,7 +153,7 @@ export default function DigiBlocks() {
     widthUnitsControl.value = widthUnits;
     depthUnitsControl.value = depthUnits;
     heightUnitsControl.value = heightUnits;
-    zoomControl.value = zoomLevel;
+    zoomControl.value = viewBoxSize;
 
     render();
 
@@ -176,7 +178,7 @@ export default function DigiBlocks() {
     });
 
     zoomControl.addEventListener('change', () => {
-      zoomLevel = +zoomControl.value;
+      viewBoxSize = +zoomControl.value;
       render();
     });
 
