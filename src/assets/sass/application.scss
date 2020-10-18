@@ -1,0 +1,54 @@
+// Import NHS.UK frontend library
+@import "node_modules/nhsuk-frontend/packages/nhsuk";
+
+// Components that are not in the NHS.UK frontend library
+// ..
+@import "digi-blocks";
+
+///////////////////////////////////////////
+// Add your custom Sass styles below...
+///////////////////////////////////////////
+
+// ---
+// ---
+.form-controls,
+svg {
+  position: relative;
+}
+
+svg {
+  width: 400px;
+  height: 300px;
+  border: 1px solid #808080;
+}
+
+.form-controls {
+  padding-right: 100px;
+}
+
+body {
+  font-family: Arial, Verdana;
+  font-size: 90%;
+}
+
+label {
+  font-weight: 400;
+}
+
+.float-container {
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  &__left {
+    float: left;
+  }
+
+  &__right {
+    float: right;
+  }
+}
+
+// ----

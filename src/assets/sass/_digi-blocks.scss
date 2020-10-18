@@ -1,0 +1,163 @@
+// Digi blocks in different colour variations
+.db {
+  transform-style: preserve-3d;
+  transform-origin: 50% 50%;
+  position: absolute;
+
+  &-stage {
+    position: relative;
+    display: block;
+  }
+
+  &-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  &--black {
+    polygon {
+      &:nth-child(1) {
+        fill: #000000;
+      }
+
+      &:nth-child(2) {
+        fill: #191718;
+      }
+
+      &:nth-child(3) {
+        fill: #231F20;
+      }
+    }
+  }
+
+  &--yellow {
+    polygon {
+      &:nth-child(1) {
+        fill: #EEC600;
+      }
+
+      &:nth-child(2) {
+        fill: #F5D507;
+      }
+
+      &:nth-child(3) {
+        fill: #FAE100;
+      }
+    }
+  }
+
+  &--blue {
+    polygon {
+      &:nth-child(1) {
+        fill: #0057B5;
+      }
+
+      &:nth-child(2) {
+        fill: #0062CC;
+      }
+
+      &:nth-child(3) {
+        fill: #0072CE;
+      }
+    }
+  }
+
+  &--dark-blue {
+    polygon {
+      &:nth-child(1) {
+        fill: #001B66;
+      }
+
+      &:nth-child(2) {
+        fill: #00267A;
+      }
+
+      &:nth-child(3) {
+        fill: #003087;
+      }
+    }
+  }
+
+  &--light-blue {
+    polygon {
+      &:nth-child(1) {
+        fill: #B2CFEA;
+      }
+
+      &:nth-child(2) {
+        fill: #BFD7ED;
+      }
+
+      &:nth-child(3) {
+        fill: #CCDFF1;
+      }
+    }
+  }
+
+  &--dark-grey {
+    polygon {
+      &:nth-child(1) {
+        fill: #313F47;
+      }
+
+      &:nth-child(2) {
+        fill: #3A4A54;
+      }
+
+      &:nth-child(3) {
+        fill: #425563;
+      }
+    }
+  }
+
+  &--grey {
+    polygon {
+      &:nth-child(1) {
+        fill: #61717A;
+      }
+
+      &:nth-child(2) {
+        fill: #6B7A82;
+      }
+
+      &:nth-child(3) {
+        fill: #768692;
+      }
+    }
+  }
+
+  &--light-grey {
+    polygon {
+      &:nth-child(1) {
+        fill: #CDD5D6;
+      }
+
+      &:nth-child(2) {
+        fill: #DADFDF;
+      }
+
+      &:nth-child(3) {
+        fill: #E8EDEE;
+      }
+    }
+  }
+
+  &--white {
+    polygon {
+      &:nth-child(1) {
+        fill: #EFF2F1;
+      }
+
+      &:nth-child(2) {
+        fill: #F5F5F4;
+      }
+
+      &:nth-child(3) {
+        fill: #FBFAFA;
+      }
+    }
+  }
+}
