@@ -1,4 +1,4 @@
-/* global document FileReader */
+/* global document FileReader Blob */
 export default function DigiBlocks() {
   const stageEl = document.querySelector('#db-stage');
   if (!stageEl) {
@@ -7,7 +7,7 @@ export default function DigiBlocks() {
 
   //
   // Change these to set the amount of blocks
-  const version = '0.1';
+  const version = '0.2';
   let widthUnits = 1;
   let depthUnits = 1;
   let heightUnits = 1;
@@ -24,6 +24,7 @@ export default function DigiBlocks() {
   const colourControl = document.querySelector('#colour');
   const exportButton = document.querySelector('#exportButton');
   const importButton = document.querySelector('#importButton');
+  const saveButton = document.querySelector('#saveButton');
   const fileDownloadTrigger = document.querySelector('#fileDownloadTrigger');
   const fileUploadTrigger = document.querySelector('#fileUploadTrigger');
 
@@ -32,7 +33,17 @@ export default function DigiBlocks() {
   const blockHeight = 82;
   const xShift = blockWidth * 0.5;
   const yShift = blockHeight * 0.25;
-  const colourVariants = ['white', 'yellow', 'black', 'grey', 'light-grey', 'dark-grey', 'blue', 'light-blue', 'dark-blue'];
+  const colours = {
+    black: ['#191718', '#0C0C0C', '#000305'],
+    yellow: ['#F5D507', '#F2CB0C', '#EEC000'],
+    blue: ['#0062CC', '#005ABE', '#0050B5'],
+    darkBlue: ['#00267A', '#001F75', '#001766'],
+    lightBlue: ['#BFD7ED', '#B2CFEA', '#A6C7E6'],
+    darkGrey: ['#3C4D57', '#32434C', '#313D45'],
+    grey: ['#6D7B86', '#62717A', '#5C6B75'],
+    lightGrey: ['#DADFDF', '#CDD5D6', '#C5CDCF'],
+    white: ['#FBFAFA', '#F5F5F4', '#EFF2F1'],
+  };
   let blocks = [];
 
   const capitaliseString = (string) => {
@@ -48,8 +59,8 @@ export default function DigiBlocks() {
   };
 
   const initColourControl = () => {
-    const allColourVariants = ['random', ...colourVariants];
-    allColourVariants.forEach((colourId) => {
+    const colourVariants = ['random', ...Object.keys(colours)];
+    colourVariants.forEach((colourId) => {
       const colourLabel = capitaliseString(colourId);
       const optionEl = document.createElement('option');
       optionEl.value = colourId;
@@ -110,9 +121,6 @@ export default function DigiBlocks() {
     fileReader.addEventListener('load', (event) => {
       parseDataFile(event.target.result);
     });
-    // fileReader.addEventListener('error', (error) => {
-    //   console.log(error);
-    // });
 
     fileReader.readAsText(dataFile);
   };
@@ -137,16 +145,46 @@ export default function DigiBlocks() {
     fileDownloadTrigger.click();
   };
 
-  const generateColourId = () => {
-    return colourVariants.indexOf(colour) >= 0
-      ? colourVariants.indexOf(colour)
-      : Math.round(Math.random() * (colourVariants.length - 1));
+  const saveSVG = () => {
+    const dupeStageEl = document.createElement('div');
+    dupeStageEl.innerHTML = stageEl.outerHTML;
+
+    const svg = dupeStageEl.querySelector('svg');
+    svg.removeAttribute('aria-hidden');
+    svg.removeAttribute('preserveAspectRatio');
+    svg.removeAttribute('id');
+    svg.removeAttribute('focusable');
+
+    const layers = dupeStageEl.querySelectorAll('.db-layer');
+    layers.forEach((layer) => {
+      layer.removeAttribute('class');
+    });
+
+    const dbs = Array.from(dupeStageEl.querySelectorAll('.db'));
+    dbs.forEach((db) => {
+      db.removeAttribute('class');
+      db.removeAttribute('data-coords');
+    });
+
+    const svgData = dupeStageEl.innerHTML;
+    const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+    const dataStr = URL.createObjectURL(svgBlob);
+    fileDownloadTrigger.setAttribute('href', dataStr);
+    fileDownloadTrigger.setAttribute('download', 'nhsd-digiblock.svg');
+    fileDownloadTrigger.click();
+  };
+
+  const getColourKey = () => {
+    const keys = Object.keys(colours);
+    return keys.indexOf(colour) >= 0
+      ? colour
+      : keys[Math.floor(keys.length * Math.random())];
   };
 
   const updateBlockDataColours = () => {
     blocks.forEach((layer) => {
       layer.forEach((block) => {
-        block.colourVariantId = generateColourId();
+        block.colourKey = getColourKey();
       });
     });
   };
@@ -167,7 +205,7 @@ export default function DigiBlocks() {
           y: i,
           z: Math.floor(j / widthUnits),
           blank: Math.random() > 1 - fineness,
-          colourVariantId: generateColourId(),
+          colourKey: getColourKey(),
         };
 
         blocks[i].push(block);
@@ -197,11 +235,10 @@ export default function DigiBlocks() {
         if (!block.blank) {
           const gEl = document.createElementNS(xmlns, 'g');
           gEl.classList.add('db');
-          gEl.classList.add(`db--${colourVariants[block.colourVariantId]}`);
 
-          let blockHtml = '<polygon points="0,20.5 0,61.4 35.5,82 35.5,41"/>';
-          blockHtml += '<polygon points="35.5,82 71,61.4 71,20.5 35.5,41"/>';
-          blockHtml += '<polygon points="0,20.5 35.5,0 71,20.5 35.5,41"/>';
+          let blockHtml = `<polygon points="0,20.5 35.5,0 71,20.5 35.5,41" fill="${colours[block.colourKey][0]}" />`;
+          blockHtml += `<polygon points="35.5,82 71,61.4 71,20.5 35.5,41" fill="${colours[block.colourKey][1]}" />`;
+          blockHtml += `<polygon points="0,20.5 0,61.4 35.5,82 35.5,41" fill="${colours[block.colourKey][2]}" />`;
           gEl.innerHTML = blockHtml;
 
           const posX = xAnchor + xShift * block.x - xShift * block.z;
@@ -281,6 +318,10 @@ export default function DigiBlocks() {
     importButton.addEventListener('click', () => {
       importButton.blur();
       importData();
+    });
+    saveButton.addEventListener('click', () => {
+      saveButton.blur();
+      saveSVG();
     });
 
     fileUploadTrigger.addEventListener('change', openDataFile);
