@@ -110,9 +110,9 @@ export default function DigiBlocks() {
     fileReader.addEventListener('load', (event) => {
       parseDataFile(event.target.result);
     });
-    fileReader.addEventListener('error', (error) => {
-      console.log(error);
-    });
+    // fileReader.addEventListener('error', (error) => {
+    //   console.log(error);
+    // });
 
     fileReader.readAsText(dataFile);
   };
@@ -210,8 +210,7 @@ export default function DigiBlocks() {
           // Shift layers
           posY -= yShift * 2 * block.y;
 
-          const transformCSS = `transform: translate(${posX}px, ${posY}px);`;
-          gEl.setAttribute('style', transformCSS);
+          gEl.setAttribute('transform', `translate(${posX}, ${posY})`);
           gEl.setAttribute('data-coords', `${block.x}-${block.z}-${block.y}`);
           layerEl.appendChild(gEl);
         }
