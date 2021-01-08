@@ -1,0 +1,31 @@
+name: Build and Test
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: 'Publish'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout the code'
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+          persist-credentials: false
+
+      - name: 'Install & build'
+        run: |
+          npm install
+          npm run build-prod
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages # The branch the action should deploy to.
+          FOLDER: public # The folder the action should deploy.
+          CLEAN: true # Automatically remove deleted files from the deploy branch
