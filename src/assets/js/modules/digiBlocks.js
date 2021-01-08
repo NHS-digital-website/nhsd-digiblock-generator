@@ -7,13 +7,13 @@ export default function DigiBlocks() {
 
   //
   // Change these to set the amount of blocks
-  const version = '0.2';
-  let widthUnits = 1;
-  let depthUnits = 1;
-  let heightUnits = 1;
-  let viewBoxSize = 300;
-  let colour = 'yellow';
-  let fineness = 0; // 0-1 where 0 = every block is rendered, 1 = no blocks are rendered
+  const version = '0.3';
+  let widthUnits = 7;
+  let depthUnits = 7;
+  let heightUnits = 7;
+  let viewBoxSize = 600;
+  let colour = 'random';
+  let fineness = 0.92; // 0-1 where 0 = every block is rendered, 1 = no blocks are rendered
 
   //
   const widthUnitsControl = document.querySelector('#widthUnits');
