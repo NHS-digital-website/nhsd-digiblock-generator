@@ -26,6 +26,10 @@ The project runs on `http://localhost:3000`
 
 	$ npm run build-dev
 	
+## Deployment
+
+The deployment happens automatically using [GitHub Actions](https://github.com/features/actions). When the master branch is pushed to origin, GitHub automatically builds and deploys the latest version of the site, and hosts it on GitHub pages. The URL is [https://nhs-digital-website.github.io/nhsd-digiblock-generator/](https://nhs-digital-website.github.io/nhsd-digiblock-generator/).
+
 ## Developer notes
 
 This project was created using [Sprint UI](https://github.com/robertpataki/sprint-ui) - a static site generator created specifically for UI work on GOVUK and NHSUK projects. For full documentation on the site generator, please refer to the [Sprint UI NHSUK Example repository](https://github.com/robertpataki/sprint-ui-nhsuk).
