@@ -6,6 +6,17 @@ This static website generates NHS Digital digiblocks, and enables the user to do
 
 The project was created with Heroku in mind as a host solution, but - being a pre-compiled static website - can be hosted on any environment (Github Pages, AWS S3 bucket, Netlify ect.).
 
+### Example compositions
+
+The following example compositions are available in the repo:
+
+|Name|Public URL|Source URL|
+|---|---|---|
+|Composition #1|[https://nhs-digital-website.github.io/nhsd-digiblock-generator/assets/images/db-comp-1.svg](https://nhs-digital-website.github.io/nhsd-digiblock-generator/assets/images/db-comp-1.svg)|[https://github.com/NHS-digital-website/nhsd-digiblock-generator/blob/gh-pages/assets/images/db-comp-1.svg](https://github.com/NHS-digital-website/nhsd-digiblock-generator/blob/gh-pages/assets/images/db-comp-1.svg)|
+|Composition #2|[https://nhs-digital-website.github.io/nhsd-digiblock-generator/assets/images/db-comp-2.svg](https://nhs-digital-website.github.io/nhsd-digiblock-generator/assets/images/db-comp-2.svg)|[https://github.com/NHS-digital-website/nhsd-digiblock-generator/blob/gh-pages/assets/images/db-comp-2.svg](https://github.com/NHS-digital-website/nhsd-digiblock-generator/blob/gh-pages/assets/images/db-comp-2.svg)|
+|Composition #3|[https://nhs-digital-website.github.io/nhsd-digiblock-generator/assets/images/db-comp-3.svg](https://nhs-digital-website.github.io/nhsd-digiblock-generator/assets/images/db-comp-3.svg)|[https://github.com/NHS-digital-website/nhsd-digiblock-generator/blob/gh-pages/assets/images/db-comp-3.svg](https://github.com/NHS-digital-website/nhsd-digiblock-generator/blob/gh-pages/assets/images/db-comp-3.svg)|
+|Composition #4|[https://nhs-digital-website.github.io/nhsd-digiblock-generator/assets/images/db-comp-4.svg](https://nhs-digital-website.github.io/nhsd-digiblock-generator/assets/images/db-comp-4.svg)|[https://github.com/NHS-digital-website/nhsd-digiblock-generator/blob/gh-pages/assets/images/db-comp-4.svg](https://github.com/NHS-digital-website/nhsd-digiblock-generator/blob/gh-pages/assets/images/db-comp-41.svg)|
+
 ## Project installation
 
 	$ npm i

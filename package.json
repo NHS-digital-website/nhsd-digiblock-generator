@@ -1,7 +1,7 @@
 {
   "name": "nhsd-digi-blocks",
-  "version": "1.0.0",
-  "description": "Static site and asset generator using the NHSUK front-end toolkit. Built with the power of Gulp 4, Webpack 4, Babel 7, Node Sass and Nunjucks.",
+  "version": "0.3.1",
+  "description": "Digiblock Generator for NHS Digital",
   "engines": {
     "node": ">=10.0.0"
   },
@@ -11,7 +11,7 @@
     "build-dev": "gulp build -env=dev",
     "build-prod": "gulp build"
   },
-  "author": "Rob Pataki",
+  "author": "Rob Pataki - Valtech UK <rob.pataki@valtech.com>",
   "license": "MIT",
   "dependencies": {
     "babel-core": "^6.26.3",

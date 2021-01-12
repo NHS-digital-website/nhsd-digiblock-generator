@@ -1,11 +1,6 @@
 .demo-wrapper {
   position: absolute;
   display: flex;
-  // flex-direction: row;
-  // flex-wrap: nowrap;
-  // justify-content: flex-start;
-  // align-content: flex-start;
-  // align-items: flex-start;
   top: 0;
   left: 0;
   width: 100%;
@@ -56,4 +51,16 @@
     float: right;
     min-width: 130px;
   }
+}
+
+.version-tag {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: .4rem .6rem;
+  font-size: 60%;
+  background: #312e2e;
+  color: #ffffff;
+  font-weight: bold;
+
 }

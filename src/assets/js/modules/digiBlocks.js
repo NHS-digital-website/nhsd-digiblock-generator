@@ -7,26 +7,48 @@ export default function DigiBlocks() {
 
   //
   // Change these to set the amount of blocks
-  const version = '0.3';
-  let widthUnits = 7;
-  let depthUnits = 7;
-  let heightUnits = 7;
-  let viewBoxSize = 600;
-  let colour = 'random';
-  let fineness = 0.92; // 0-1 where 0 = every block is rendered, 1 = no blocks are rendered
+  const version = '0.3.1';
+
+  const defaults = {
+    widthUnits: 7,
+    depthUnits: 7,
+    heightUnits: 7,
+    viewBoxSize: 600,
+    colour: 'random',
+    fineness: 0.92, // 0-1 where 0 = every block is rendered, 1 = no blocks are rendered
+  };
+
+  let {
+    widthUnits,
+    depthUnits,
+    heightUnits,
+    viewBoxSize,
+    colour,
+    fineness,
+  } = defaults;
+
+  const versionTag = document.querySelector('#version-tag');
+  versionTag.innerHTML = `v${version}`;
 
   //
   const widthUnitsControl = document.querySelector('#widthUnits');
   const heightUnitsControl = document.querySelector('#heightUnits');
   const depthUnitsControl = document.querySelector('#depthUnits');
   const finenessControl = document.querySelector('#fineness');
-  const zoomControl = document.querySelector('#zoom');
+  const viewBoxControl = document.querySelector('#viewBox');
   const colourControl = document.querySelector('#colour');
   const exportButton = document.querySelector('#exportButton');
   const importButton = document.querySelector('#importButton');
   const saveButton = document.querySelector('#saveButton');
   const fileDownloadTrigger = document.querySelector('#fileDownloadTrigger');
   const fileUploadTrigger = document.querySelector('#fileUploadTrigger');
+
+  const widthUnitsControlLabel = document.querySelector('[for="widthUnits"]');
+  const heightUnitsControlLabel = document.querySelector('[for="heightUnits"]');
+  const depthUnitsControlLabel = document.querySelector('[for="depthUnits"]');
+  const finenessControlLabel = document.querySelector('[for="fineness"]');
+  const viewBoxControlLabel = document.querySelector('[for="viewBox"]');
+  const colourControlLabel = document.querySelector('[for="colour"]');
 
   const xmlns = 'http://www.w3.org/2000/svg';
   const blockWidth = 71;
@@ -74,7 +96,7 @@ export default function DigiBlocks() {
     widthUnitsControl.value = widthUnits;
     depthUnitsControl.value = depthUnits;
     heightUnitsControl.value = heightUnits;
-    zoomControl.value = viewBoxSize;
+    viewBoxControl.value = viewBoxSize;
 
     colourControl.options.forEach((optionEl) => {
       optionEl.removeAttribute('selected');
@@ -269,36 +291,61 @@ export default function DigiBlocks() {
     drawBlocks();
   };
 
+  // Update the label
+  const updateControlLabel = (labelEl, value, defaultValue, prefix) => {
+    labelEl.innerHTML = `${prefix} (${value})`;
+    if (value === defaultValue) {
+      labelEl.style.fontWeight = 'bold';
+    } else {
+      labelEl.style.fontWeight = null;
+    }
+  };
+
+  const updateControlLabels = () => {
+    updateControlLabel(finenessControlLabel, fineness, defaults.fineness, 'Fineness');
+    updateControlLabel(widthUnitsControlLabel, widthUnits, defaults.widthUnits, 'Width');
+    updateControlLabel(depthUnitsControlLabel, depthUnits, defaults.depthUnits, 'Depth');
+    updateControlLabel(heightUnitsControlLabel, heightUnits, defaults.heightUnits, 'Height');
+    updateControlLabel(viewBoxControlLabel, viewBoxSize, defaults.viewBoxSize, 'Viewbox');
+    updateControlLabel(colourControlLabel, colour, defaults.colour, 'Colour');
+  };
+
   const init = () => {
     initColourControl();
     setControlValues();
     render();
+    updateControlLabels();
 
     finenessControl.addEventListener('change', () => {
       fineness = +finenessControl.value;
       render();
+      updateControlLabel(finenessControlLabel, fineness, defaults.fineness, 'Fineness');
     });
 
     widthUnitsControl.addEventListener('change', () => {
       widthUnits = +widthUnitsControl.value;
       render();
+      updateControlLabel(widthUnitsControlLabel, widthUnits, defaults.widthUnits, 'Width');
     });
 
     depthUnitsControl.addEventListener('change', () => {
       depthUnits = +depthUnitsControl.value;
       render();
+      updateControlLabel(depthUnitsControlLabel, depthUnits, defaults.depthUnits, 'Depth');
     });
 
     heightUnitsControl.addEventListener('change', () => {
       heightUnits = +heightUnitsControl.value;
       render();
+      updateControlLabel(heightUnitsControlLabel, heightUnits, defaults.heightUnits, 'Height');
     });
 
-    zoomControl.addEventListener('change', () => {
-      viewBoxSize = +zoomControl.value;
+    viewBoxControl.addEventListener('change', () => {
+      viewBoxSize = +viewBoxControl.value;
       render({
         generateData: false,
       });
+      updateControlLabel(viewBoxControlLabel, viewBoxSize, defaults.viewBoxSize, 'Viewbox');
     });
 
     colourControl.addEventListener('change', () => {
@@ -309,6 +356,8 @@ export default function DigiBlocks() {
       render({
         generateData: false,
       });
+
+      updateControlLabel(colourControlLabel, colour, defaults.colour, 'Colour');
     });
 
     exportButton.addEventListener('click', () => {
